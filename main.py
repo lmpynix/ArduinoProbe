@@ -20,6 +20,7 @@ def init():
         print('Connection Failed.')
         return 1
     print('Connection Succeeded.  Device with ID 0 is connected.')
+    blinks(0, 'confirm')
     return 0
 
 
@@ -36,8 +37,8 @@ def led(probeid, state):
         raise
 
 
-def blinks(probeid, type):
-    if type == 'confirm':
+def blinks(probeid, blinktype):
+    if blinktype == 'confirm':
         led(probeid, 1)
         time.sleep(0.5)
         led(probeid, 0)
@@ -46,7 +47,7 @@ def blinks(probeid, type):
         time.sleep(0.25)
         led(probeid, 0)
         time.sleep(0.25)
-    elif type == 'failure':
+    elif blinktype == 'failure':
         led(probeid, 1)
         time.sleep(0.25)
         led(probeid, 0)
