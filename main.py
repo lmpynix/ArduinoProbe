@@ -2,12 +2,13 @@
 
 from pyfirmata import Arduino as ard
 from pyfirmata import util
-import threading, os, time
+import threading, os, time, _thread
 
 VERSION = "0.0.1"
 
 probeaddrs = []
 probes = []
+pin13led = True
 
 
 def init():
@@ -27,12 +28,41 @@ def main():
     init()
 
 
-def blink(board, freq):
-    while True:
-        probes[board].digital[13].write(1)
-        time.sleep(freq)
-        probes[board].digital[13].write(0)
-        time.sleep(freq)
+def led(probeid, state):
+    try:
+        probes[probeid].digital[13].write(state)
+    except:
+        print('Writing to LED failed.')
+        raise
+
+
+def blinks(probeid, type):
+    if type == 'confirm':
+        led(probeid, 1)
+        time.sleep(0.5)
+        led(probeid, 0)
+        time.sleep(0.5)
+        led(probeid, 1)
+        time.sleep(0.25)
+        led(probeid, 0)
+        time.sleep(0.25)
+    elif type == 'failure':
+        led(probeid, 1)
+        time.sleep(0.25)
+        led(probeid, 0)
+        time.sleep(0.25)
+        led(probeid, 1)
+        time.sleep(0.25)
+        led(probeid, 0)
+        time.sleep(0.25)
+        led(probeid, 1)
+        time.sleep(0.25)
+        led(probeid, 0)
+        time.sleep(0.25)
+        led(probeid, 1)
+        time.sleep(0.25)
+        led(probeid, 0)
+        time.sleep(0.25)
 
 
 if __name__ == '__main__':
