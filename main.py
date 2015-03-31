@@ -3,6 +3,7 @@
 from pyfirmata import Arduino as ard
 from pyfirmata import util
 import threading, os, time
+
 VERSION = "0.0.1"
 
 probeaddrs = []
@@ -27,10 +28,11 @@ def main():
 
 
 def blink(board, freq):
-    probes[board].digital[13].write(1)
-    time.sleep(freq)
-    probes[board].digital[13].write(0)
-    time.sleep(freq)
+    while True:
+        probes[board].digital[13].write(1)
+        time.sleep(freq)
+        probes[board].digital[13].write(0)
+        time.sleep(freq)
 
 
 if __name__ == '__main__':
