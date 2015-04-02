@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 from pyfirmata import Arduino as ard
 from pyfirmata import util
-import threading, os, time, _thread
+import threading
+import os
+import _thread
+import time
 
 VERSION = "0.0.1"
 
@@ -30,11 +34,14 @@ def main():
 
 
 def led(probeid, state):
-    try:
-        probes[probeid].digital[13].write(state)
-    except:
-        print('Writing to LED failed.')
-        raise
+    if pin13led:
+        try:
+            probes[probeid].digital[13].write(state)
+        except:
+            print('Writing to LED failed.')
+            raise
+    else:
+        print('Pin 13 is not enabled as an LED.')
 
 
 def blinks(probeid, blinktype):
